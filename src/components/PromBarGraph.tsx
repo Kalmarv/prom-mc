@@ -37,7 +37,8 @@ const PromBarGraph: React.FC<{
   label: string
   suffix: string
   multiply?: number
-}> = ({ query, label, suffix, multiply }) => {
+  toFixed?: number
+}> = ({ query, label, suffix, multiply, toFixed }) => {
   const [queryData, setQueryData] = useState()
 
   useEffect(() => {
@@ -51,8 +52,14 @@ const PromBarGraph: React.FC<{
 
   return queryData ? (
     <>
-      <div className='p-5'>
-        <SVGGraph data={queryData} label={label} suffix={suffix} multiply={multiply ?? 1} />
+      <div className='p-4'>
+        <SVGGraph
+          data={queryData}
+          label={label}
+          suffix={suffix}
+          multiply={multiply ?? 1}
+          toFixed={toFixed ?? 0}
+        />
       </div>
     </>
   ) : null

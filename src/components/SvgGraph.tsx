@@ -13,13 +13,14 @@ const SVGGraph: React.FC<{
   label: string
   suffix: string
   multiply?: number
-}> = ({ data, label, suffix, multiply }) => {
+  toFixed?: number
+}> = ({ data, label, suffix, multiply, toFixed }) => {
   const maxValue = getMaxValue(data)
 
   return (
     <>
-      <div className='card w-full bg-primary shadow-xl p-2 max-w-2xl'>
-        <p className='font-bold text-lg'>{label}</p>
+      <div className='card w-full bg-base-200 shadow-xl p-4'>
+        <p className='font-bold text-lg text-primary'>{label}</p>
         <div className='flex flex-col w-full'>
           {Object.entries(data).map(([key, value]) => {
             return (
@@ -27,8 +28,10 @@ const SVGGraph: React.FC<{
                 <p className='w-1/4'>{key}</p>
                 <div className='w-3/4'>
                   <div
-                    className='relative w-full h-4 bg-gray-200 rounded tooltip'
-                    data-tip={`${(value * (multiply ?? 1)).toLocaleString('EN-US')} ${suffix}`}>
+                    className='relative w-full h-4 bg-base-100 rounded tooltip'
+                    data-tip={`${parseFloat(
+                      (value * (multiply ?? 1)).toFixed(toFixed ?? 0)
+                    ).toLocaleString('EN-US')} ${suffix}`}>
                     <div
                       className='absolute top-0 h-4 bg-secondary rounded'
                       style={{
