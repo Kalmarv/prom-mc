@@ -1,5 +1,7 @@
 import { PrometheusDriver } from 'prometheus-query'
 import { useEffect, useState } from 'react'
+import { formattedQuery } from '../types'
+import SVGGraph from './SvgGraph'
 
 const promEndpoint = import.meta.env.VITE_PROM_ENDPOINT
 
@@ -25,12 +27,17 @@ const getQuery = async (query: string) => {
           obj[item.metric] = item.value
           return obj
         }, {})
-      return formattedData
+      return formattedData as formattedQuery
     })
     .catch(console.error)
 }
 
-const PromBarGraph: React.FC<{ query: string; label: string }> = ({ query, label }) => {
+const PromBarGraph: React.FC<{
+  query: string
+  label: string
+  suffix: string
+  multiply?: number
+}> = ({ query, label, suffix, multiply }) => {
   const [queryData, setQueryData] = useState()
 
   useEffect(() => {
@@ -44,9 +51,9 @@ const PromBarGraph: React.FC<{ query: string; label: string }> = ({ query, label
 
   return queryData ? (
     <>
-      <p className='font-bold'>
-        {label}: {JSON.stringify(queryData)}
-      </p>
+      <div className='p-5'>
+        <SVGGraph data={queryData} label={label} suffix={suffix} multiply={multiply ?? 1} />
+      </div>
     </>
   ) : null
 }
