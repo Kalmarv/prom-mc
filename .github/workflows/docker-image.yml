@@ -25,4 +25,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: kalmarv/prom-mc:${{ github.sha }}
+        tags: kalmarv/prom-mc:latest
