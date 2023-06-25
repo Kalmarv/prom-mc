@@ -1,7 +1,9 @@
+import Prom from './components/Prom'
+
 const App = () => {
   return (
     <>
-      <p className='font-bold'>hi</p>
+      <Prom />
     </>
   )
 }
