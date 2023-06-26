@@ -1,7 +1,7 @@
 import { PrometheusDriver } from 'prometheus-query'
 import { useEffect, useState } from 'react'
 import { formattedQuery } from '../types'
-import SVGGraph from './SvgGraph'
+import GraphCard from './GraphCard'
 
 const promEndpoint = import.meta.env.VITE_PROM_ENDPOINT
 
@@ -53,7 +53,7 @@ const PromBarGraph: React.FC<{
   return queryData ? (
     <>
       <div className='p-4'>
-        <SVGGraph
+        <GraphCard
           data={queryData}
           label={label}
           suffix={suffix}

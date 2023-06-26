@@ -1,4 +1,5 @@
 import { formattedQuery } from '../types'
+import PlayerIcon from './PlayerIcon'
 
 const getMaxValue = (data: formattedQuery) => {
   let max = 0
@@ -8,7 +9,7 @@ const getMaxValue = (data: formattedQuery) => {
   return max
 }
 
-const SVGGraph: React.FC<{
+const GraphCard: React.FC<{
   data: formattedQuery
   label: string
   suffix: string
@@ -20,20 +21,25 @@ const SVGGraph: React.FC<{
   return (
     <>
       <div className='card w-full bg-base-200 shadow-xl p-4'>
-        <p className='font-bold text-lg text-primary'>{label}</p>
+        <p className='font-bold text-lg text-primary pb-2'>{label}</p>
         <div className='flex flex-col w-full'>
           {Object.entries(data).map(([key, value]) => {
             return (
               <div className='flex flex-row w-full' key={key}>
-                <p className='w-1/4'>{key}</p>
+                <p className={`w-1/5 ${value === maxValue ? 'font-bold text-accent' : null}`}>
+                  {key}
+                </p>
+                <div className='w-5 h-5 mr-2'>
+                  <PlayerIcon player={key} />
+                </div>
                 <div className='w-3/4'>
                   <div
-                    className='relative w-full h-4 bg-base-100 rounded tooltip'
+                    className='relative w-full h-5 bg-base-100 rounded tooltip'
                     data-tip={`${parseFloat(
                       (value * (multiply ?? 1)).toFixed(toFixed ?? 0)
                     ).toLocaleString('EN-US')} ${suffix}`}>
                     <div
-                      className='absolute top-0 h-4 bg-secondary rounded'
+                      className='absolute top-0 h-5 bg-secondary rounded'
                       style={{
                         width: `${(value / maxValue) * 100}%`,
                       }}
@@ -49,4 +55,4 @@ const SVGGraph: React.FC<{
   )
 }
 
-export default SVGGraph
+export default GraphCard
