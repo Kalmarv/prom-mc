@@ -13,7 +13,6 @@ const App = () => {
             label='Blocks Mined'
             suffix='Blocks'
             metric='player'
-            addIcon={false}
           />
           <PromBarGraph
             query='sum(blocks_crafted) by (player)'
