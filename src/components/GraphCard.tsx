@@ -29,7 +29,7 @@ const GraphCard: React.FC<{
               return (
                 <div className='mr-3' key={key}>
                   <p className={`w-1/5 ${value === maxValue ? 'font-bold text-accent' : null}`}>
-                    {key}
+                    {key.split(':').pop()}
                   </p>
                 </div>
               )

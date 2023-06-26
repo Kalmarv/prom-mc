@@ -6,7 +6,7 @@ const App = () => {
       <div className='flex flex-row justify-center'>
         <div className='flex flex-col w-full max-w-3xl'>
           <h1 className='text-center p-14 font-bold text-2xl text-accent'>
-            Minecraft Player Stats
+            Minecraft Server Stats
           </h1>
           <PromBarGraph
             query='sum(blocks_mined) by (player)'
