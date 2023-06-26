@@ -15,7 +15,8 @@ const GraphCard: React.FC<{
   suffix: string
   multiply?: number
   toFixed?: number
-}> = ({ data, label, suffix, multiply, toFixed }) => {
+  addIcon?: boolean
+}> = ({ data, label, suffix, multiply, toFixed, addIcon }) => {
   const maxValue = getMaxValue(data)
 
   return (
@@ -26,7 +27,7 @@ const GraphCard: React.FC<{
           <div className='flex flex-col justify-between'>
             {Object.entries(data).map(([key, value]) => {
               return (
-                <div className='' key={key}>
+                <div className='mr-3' key={key}>
                   <p className={`w-1/5 ${value === maxValue ? 'font-bold text-accent' : null}`}>
                     {key}
                   </p>
@@ -35,15 +36,16 @@ const GraphCard: React.FC<{
             })}
           </div>
           <div className='flex flex-col justify-between'>
-            {Object.entries(data).map(([key, _]) => {
-              return (
-                <div className='' key={key}>
-                  <div className='w-5 h-5 mr-3 ml-3'>
-                    <PlayerIcon player={key} />
+            {addIcon &&
+              Object.entries(data).map(([key, _]) => {
+                return (
+                  <div className='' key={key}>
+                    <div className='w-5 h-5 mr-3'>
+                      <PlayerIcon player={key} />
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
           </div>
           <div className='w-full flex flex-col justify-between'>
             {Object.entries(data).map(([key, value]) => {

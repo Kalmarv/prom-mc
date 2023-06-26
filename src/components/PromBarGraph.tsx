@@ -10,7 +10,7 @@ const promDriver = new PrometheusDriver({
   baseURL: '/api/v1/', // default value
 })
 
-const getQuery = async (query: string) => {
+const getQuery = async (query: string, metric: string) => {
   const q = query
   return promDriver
     .instantQuery(q)
@@ -19,11 +19,12 @@ const getQuery = async (query: string) => {
       const formattedData = series
         .map((s) => {
           return {
-            metric: s.metric.labels.player,
+            metric: s.metric.labels[metric],
             value: s.value.value,
           }
         })
         .sort((a, b) => b.value - a.value)
+        .slice(0, 20)
         .reduce((obj: any, item) => {
           obj[item.metric] = item.value
           return obj
@@ -37,19 +38,21 @@ const PromBarGraph: React.FC<{
   query: string
   label: string
   suffix: string
+  metric: string
   multiply?: number
   toFixed?: number
-}> = ({ query, label, suffix, multiply, toFixed }) => {
+  addIcon?: boolean
+}> = ({ query, label, suffix, metric, multiply, toFixed, addIcon }) => {
   const [queryData, setQueryData] = useState()
 
   useEffect(() => {
     const getData = async () => {
-      const res: any = await getQuery(query)
+      const res: any = await getQuery(query, metric)
       setQueryData(res)
     }
 
     getData()
-  }, [query])
+  }, [query, metric])
 
   return queryData ? (
     <>
@@ -60,6 +63,7 @@ const PromBarGraph: React.FC<{
           suffix={suffix}
           multiply={multiply ?? 1}
           toFixed={toFixed ?? 0}
+          addIcon={addIcon ?? true}
         />
       </div>
     </>
