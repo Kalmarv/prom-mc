@@ -23,6 +23,7 @@ const getQuery = async (query: string) => {
             value: s.value.value,
           }
         })
+        .sort((a, b) => b.value - a.value)
         .reduce((obj: any, item) => {
           obj[item.metric] = item.value
           return obj
